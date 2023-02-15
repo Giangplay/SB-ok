@@ -1,0 +1,201 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+Frame.BackgroundTransparency = 0.500
+Frame.Position = UDim2.new(0.858712733, 0, 0.0237762257, 0)
+Frame.Size = UDim2.new(0.129513338, 0, 0.227972031, 0)
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundTransparency = 1.000
+TextButton.Size = UDim2.new(1, 0, 1, 0)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Toggle"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextScaled = true
+TextButton.TextSize = 50.000
+TextButton.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextStrokeTransparency = 0.000
+TextButton.TextWrapped = true
+TextButton.MouseButton1Down:Connect(function()
+	game:GetService("VirtualInputManager"):SendKeyEvent(true, "F6" , false , game)
+end)
+
+UITextSizeConstraint.Parent = TextButton
+UITextSizeConstraint.MaxTextSize = 50
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Maikderninja/Maikderninja/main/Test.lua"))();
+local Window = Library.CreateLib("Drippy Hub (Slap Battles)", "Sentinel")
+--LOCALS
+local jesus = Instance.new("Part", workspace)
+
+	jesus.Name = "jesusWalk"
+	jesus.Size = Vector3.new(2047, 0.009, 2019)
+	jesus.Position = Vector3.new(-80.5, -10.005, -246.5)
+	jesus.CanCollide = false
+	jesus.Anchored = true
+	jesus.Transparency = 1
+	
+local arenaVoid = Instance.new("Part", workspace)
+
+	arenaVoid.Name = "arenaVoid"
+	arenaVoid.Size = Vector3.new(798, 1, 1290)
+	arenaVoid.Position = Vector3.new(3450, 59.009, 68)
+	arenaVoid.CanCollide = false
+	arenaVoid.Anchored = true
+	arenaVoid.Transparency = 1
+	
+
+-- walkspeed anticheat bypass
+if game.PlaceId == 9431156611 and getrawmetatable and hookmetamethod then
+    local old
+    old = hookmetamethod(game, "__namecall", function(self, ...)
+        local method = getnamecallmethod()
+        
+        if not checkcaller() and tostring(self) == "WS" and tostring(method) == "FireServer" then
+            return
+        end
+        
+        return old(self, ...)
+    end)
+elseif game.PlaceId ~= 9431156611 and getrawmetatable and hookmetamethod then
+    local old
+    old = hookmetamethod(game, "__namecall", function(self, ...)
+        local method = getnamecallmethod()
+        
+        if not checkcaller() and tostring(self) == "WalkSpeedChanged" and tostring(method) == "FireServer" then
+            return
+        end
+        
+        return old(self, ...)
+    end)
+end
+
+
+
+--MAIN
+local Main = Window:NewTab("Main")
+local MainSection = Main:NewSection("Main")
+
+MainSection:NewToggle("100 Slaps Fight Arena (Can't Lose)", "Creates A Barrier(cant lose)", function(state)
+    if state then
+
+	arenaVoid.CanCollide = true
+	arenaVoid.Anchored = true
+	arenaVoid.Transparency = 0.5
+
+    else
+
+	arenaVoid.CanCollide = false
+	arenaVoid.Anchored = true
+	arenaVoid.Transparency = 1
+    end
+end)
+
+
+MainSection:NewButton("Auto-Toxic(READ INFO)", "If you turn it on, you cant shut it off. (fixing ASAP)", function()
+    local choosePlayer = false --set true if you want to insult one person only
+local chosenPlayer = "" --if chosePlayer = true, type playername in quotes
+
+
+
+local Taunts = { --add as many as you wish
+  "Imagine not using DrippyHub..",
+  "Your so bad.",
+  "Don't even try me noob.",
+  "DrippyHub is the best hub for slap battles.",
+  "Too bad..",
+  "Reported.",
+  "I can't believe you don't use DrippyHub.",
+  "gg/ySVKvNA2qA",
+  "I'm too good.",
+  "My grandma can do better.",
+  "Fatherless child.",
+  "Get better, It's not hard.",
+
+}
+
+local Remote = game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest
+
+local function Insult()
+   local players = game.Players:GetChildren()
+   local howManyPlayers = #players
+   
+   local ran = math.random(1,howManyPlayers)
+   local chosenOne = players[ran]
+   local chance = math.random(1,20)
+   
+   if choosePlayer == true then
+       Remote:FireServer(chosenPlayer.." " ..Taunts[math.random(1,#Taunts)],"All")
+   elseif chance <= 5 then
+       Remote:FireServer(chosenOne.Name.." " ..Taunts[math.random(1,#Taunts)],"All")
+   else
+       Remote:FireServer(Taunts[math.random(1,#Taunts)],"All")
+   end
+end
+   
+
+local randTime = math.random(5,15)
+
+while true and wait(randTime) do
+   Insult()
+end
+end)
+
+MainSection:NewToggle("Normal Arena Anti-Void", "Creates A Barrier Over the Void In The Main Arena", function(state)
+    if state then
+	jesus.CanCollide = true
+	jesus.Anchored = true
+	jesus.Transparency = 0.5
+    else
+
+	jesus.CanCollide = false
+	jesus.Anchored = true
+	jesus.Transparency = 1
+    end
+end)
+
+
+
+--LOCAL PLAYER
+local LocalPlayer = Window:NewTab("Local Player")
+local LocalPlayerSection = LocalPlayer:NewSection("Local Player")
+
+LocalPlayerSection:NewSlider("WalkSpeed", "Controls How Fast You Run.", 150, 16, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+LocalPlayerSection:NewSlider("Jump Power", "Controls How Fast You Run.", 500, 50, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
+--SETTINGS
+local Settings = Window:NewTab("Settings")
+local SettingsSection = Settings:NewSection("Settings")
+--TOGLE
+SettingsSection:NewKeybind("Toggle UI", "Key to Toggle The UI", Enum.KeyCode.F, function()
+	Library:ToggleUI()
+end)
+--SPACE(TO MAKE IT LOOK NEAT)
+SettingsSection:NewLabel("         (Credits)          ")
+
+--DISCORD
+SettingsSection:NewLabel("discord.gg/ySVKvNA2qA")
+
+
+--CREDITS
+SettingsSection:NewLabel("Drippy#2496")
