@@ -1,0 +1,212 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+Frame.BackgroundTransparency = 0.500
+Frame.Position = UDim2.new(0.858712733, 0, 0.0237762257, 0)
+Frame.Size = UDim2.new(0.129513338, 0, 0.227972031, 0)
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundTransparency = 1.000
+TextButton.Size = UDim2.new(1, 0, 1, 0)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Toggle"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextScaled = true
+TextButton.TextSize = 50.000
+TextButton.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextStrokeTransparency = 0.000
+TextButton.TextWrapped = true
+TextButton.MouseButton1Down:Connect(function()
+	game:GetService("VirtualInputManager"):SendKeyEvent(true, "F6" , false , game)
+end)
+
+UITextSizeConstraint.Parent = TextButton
+UITextSizeConstraint.MaxTextSize = 50
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Maikderninja/Maikderninja/main/Test.lua"))();
+local Window = Library.CreateLib("Slap Royale", "Sentinel")
+
+--Anti cheats bypass--
+
+local namecall
+	namecall =
+	hookmetamethod(
+	game,
+	"__namecall",
+	function(self, ...)
+		local Args = {...}
+		if getnamecallmethod() == "FireServer" and tostring(self) == "WS" then
+			return
+		elseif getnamecallmethod() == "FireServer" and tostring(self) == "WS2" then
+			return
+		elseif getnamecallmethod() == "FireServer" and tostring(self) == "AdminGUI" then
+			return
+		elseif getnamecallmethod() == "FireServer" and tostring(self) == "Ban" then
+			return
+		end
+		return namecall(self, ...)
+	end
+	)
+
+local Tab = Window:NewTab("Get all item")
+local Section = Tab:NewSection("Get all item")
+local Tab1 = Window:NewTab("combat")
+local Section1 = Tab1:NewSection("combat")
+local Tab2 = Window:NewTab("game")
+local Section2 = Tab2:NewSection("game")
+local Tab3 = Window:NewTab("toggle ui")
+local Section3 = Tab3:NewSection("toggle ui")
+
+Section:NewButton("Get all item", "item tp you", function()
+    local lp = game.Players.LocalPlayer
+		for _, L_2 in ipairs(game.Workspace:GetDescendants()) do
+
+			if L_2:IsA("TouchTransmitter") and L_2.Parent.Name == "Handle" and game.Players.LocalPlayer.Character.inMatch.Value == true then
+				lp.Character.Humanoid:EquipTool(L_2.Parent.Parent)
+			end
+			
+
+
+		end
+		
+		wait(.25)
+		
+		game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
+end)
+
+Section:NewButton("Power", "you power big", function()
+    for _, L_3 in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+				if
+				L_3:IsA("Tool") and L_3.Name == "Potion of Strength" or L_3.Name == "Bull's essence" or
+				L_3.Name == "Speed Potion" or
+				L_3.Name == "Boba" or
+				L_3.Name == "Frog Potion" or
+				L_3.Name == "Strength Brew" or
+			    L_3.Name == "Frog Brew" or
+				L_3.Name == "Speed Brew"
+				then
+					L_3.Parent = game.Players.LocalPlayer.Character
+				end
+			end
+			wait(.5)
+			for _, L_4 in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+				if L_4:IsA("Tool") then
+					L_4:Activate()
+				end
+			end
+end)
+
+Section1:NewButton("Hitbox", "people hitbox", function()
+    loadstring(game:HttpGet(("https://gist.githubusercontent.com/stellar-4242/430ef3087d8d87eb306ca03e728ffbb8/raw/798429dd908b1f4471a1fa569ff62c5e5a93ec61/SLAP.LUA")))()
+end)
+
+Section1:NewButton("inf yield", "Admin", function()
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+end)
+
+Section2:NewButton("zone dame no", "no dame", function()
+    game.Players.LocalPlayer.Character.inZone:Destroy()
+end)
+
+Section2:NewButton("godmode", "no dame", function()
+    game.Players.LocalPlayer.Character.Vulnerable:Destroy()
+end)
+
+Section2:NewButton("anti lava", "ok", function()
+    local AntiLava = Instance.new("Part", game.Workspace)
+
+			AntiLava.Position = Vector3.new(-238, -43, 401)
+
+			AntiLava.Size = Vector3.new(150,10,150)
+
+			AntiLava.Anchored = true
+
+			AntiLava.Transparency = 1
+end)
+
+Section2:NewButton("anti acid", "ok", function()
+    local sex = Instance.new("Part")
+
+		sex.Parent = game.Workspace
+		sex.Size = Vector3.new(154, 26, 132)
+		sex.Position = Vector3.new(-60, -5, -731)
+		sex.Transparency = 1
+		sex.Anchored = true
+end)
+
+Section2:NewSlider("Walkspeed", "speed", 300, 20, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+Section2:NewSlider("Jumppower", "jump", 500, 50, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
+Section:NewButton("bomb bus", "bus dame people", function()
+    local lp = game.Players.LocalPlayer
+			for _, L_5 in ipairs(game.Workspace:GetDescendants()) do
+				if L_5:IsA("TouchTransmitter") and L_5.Parent.Name == "Handle" and L_5.Parent.Parent.Name == "Bomb" and workspace:FindFirstChild("BusModel") then
+					local Magnitude = (lp.Character.HumanoidRootPart.Position - workspace.BusModel.Position).Magnitude
+if 20 > Magnitude then 
+    
+    
+    
+					lp.Character.Humanoid:EquipTool(L_5.Parent.Parent)
+				end
+			end
+			wait(.1)
+			for _, L_6 in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+				if L_6:IsA("Tool") and L_6.Name == "Bomb" then
+					L_6.Parent = game.Players.LocalPlayer.Character
+				end
+			end
+			wait(.25)
+			for _, L_7 in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+				if L_7:IsA("Tool") then
+					L_7:Activate()
+				end
+			end
+			end
+end)
+
+Section1:NewToggle("slap arua", "slap people", function(bool)
+    getgenv().Aura = bool
+				while getgenv().Aura == true do
+					wait(.005)
+					for _, L_8 in pairs(game.Players:GetPlayers()) do
+						if L_8 ~= game.Players.LocalPlayer then
+							if
+							L_8.Character:FindFirstChild("HumanoidRootPart") ~= nil and
+							L_8.Character:FindFirstChild("Humanoid") and
+							not L_8.Character:FindFirstChild("Dead")  and not game.Players.LocalPlayer.Character:FindFirstChild("Dead")  then
+							
+								local magnitude =
+								(L_8.Character.HumanoidRootPart.Position -
+								game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+								if magnitude < 20.01 then
+									game:GetService("ReplicatedStorage").Events.Slap:FireServer(L_8.Character.Torso)
+								end
+							end
+						end
+					end
+				end
+end)
+
+Section3:NewKeybind("Toggle ui", "Toggle the ui yes", Enum.KeyCode.F6, function()
+    Library:ToggleUI()
+end)
