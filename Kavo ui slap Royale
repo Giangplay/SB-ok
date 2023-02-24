@@ -44,24 +44,19 @@ local Window = Library.CreateLib("Slap Royale", "Sentinel")
 --Anti cheats bypass--
 
 local namecall
-	namecall =
-	hookmetamethod(
-	game,
-	"__namecall",
-	function(self, ...)
-		local Args = {...}
-		if getnamecallmethod() == "FireServer" and tostring(self) == "WS" then
-			return
-		elseif getnamecallmethod() == "FireServer" and tostring(self) == "WS2" then
-			return
-		elseif getnamecallmethod() == "FireServer" and tostring(self) == "AdminGUI" then
-			return
-		elseif getnamecallmethod() == "FireServer" and tostring(self) == "Ban" then
-			return
-		end
-		return namecall(self, ...)
-	end
-	)
+    namecall = hookmetamethod(game, "__namecall", function(self, ...)
+        local Args = {...}
+        if getnamecallmethod() == "FireServer" and tostring(self) == "WS" then
+            return
+        elseif getnamecallmethod() == "FireServer" and tostring(self) == "WS2" then
+            return
+        elseif getnamecallmethod() == "FireServer" and tostring(self) == "AdminGUI" then
+            return
+        elseif getnamecallmethod() == "FireServer" and tostring(self) == "Ban" then
+            return
+        end
+        return namecall(self, ...)
+    end)
 
 local Tab = Window:NewTab("Get all item")
 local Section = Tab:NewSection("Get all item")
@@ -69,8 +64,20 @@ local Tab1 = Window:NewTab("combat")
 local Section1 = Tab1:NewSection("combat")
 local Tab2 = Window:NewTab("game")
 local Section2 = Tab2:NewSection("game")
-local Tab3 = Window:NewTab("toggle ui")
-local Section3 = Tab3:NewSection("toggle ui")
+local Tab3 = Window:NewTab("local")
+local Section3 = Tab3:NewSection("local")
+local Tab4 = Window:NewTab("toggle ui")
+local Section4 = Tab3:NewSection("toggle ui")
+    
+Section:NewButton("Get all item", "item tp you", function()
+    local lp = game.Players.LocalPlayer
+
+            for k, v in ipairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                if v.Name == "Cube of Ice" then
+                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+                    v:Activate()
+                end
+            end
 
 Section:NewButton("Get all item", "item tp you", function()
     local lp = game.Players.LocalPlayer
@@ -119,14 +126,6 @@ Section1:NewButton("inf yield", "Admin", function()
     loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
 end)
 
-Section2:NewButton("zone dame no", "no dame", function()
-    game.Players.LocalPlayer.Character.inZone:Destroy()
-end)
-
-Section2:NewButton("godmode", "no dame", function()
-    game.Players.LocalPlayer.Character.Vulnerable:Destroy()
-end)
-
 Section2:NewButton("anti lava", "ok", function()
     local AntiLava = Instance.new("Part", game.Workspace)
 
@@ -149,11 +148,11 @@ Section2:NewButton("anti acid", "ok", function()
 		sex.Anchored = true
 end)
 
-Section2:NewSlider("Walkspeed", "speed", 300, 20, function(s)
+Section3:NewSlider("Walkspeed", "speed", 300, 20, function(s)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
 
-Section2:NewSlider("Jumppower", "jump", 500, 50, function(s) -- 500 (MaxValue) | 0 (MinValue)
+Section3:NewSlider("Jumppower", "jump", 500, 50, function(s)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
 end)
 
@@ -207,6 +206,6 @@ Section1:NewToggle("slap arua", "slap people", function(bool)
 				end
 end)
 
-Section3:NewKeybind("Toggle ui", "Toggle the ui yes", Enum.KeyCode.F6, function()
+Section4:NewKeybind("Toggle ui", "Toggle the ui yes", Enum.KeyCode.F6, function()
     Library:ToggleUI()
 end)
