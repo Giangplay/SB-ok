@@ -69,7 +69,7 @@ local Section3 = Tab3:NewSection("local")
 local Tab4 = Window:NewTab("toggle ui")
 local Section4 = Tab3:NewSection("toggle ui")
     
-Section:NewButton("Get all item", "item tp you", function()
+Section:NewButton("one shot", "item cube of ice all", function()
     local lp = game.Players.LocalPlayer
 
             for k, v in ipairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -78,7 +78,7 @@ Section:NewButton("Get all item", "item tp you", function()
                     v:Activate()
                 end
             end
-
+end)
 Section:NewButton("Get all item", "item tp you", function()
     local lp = game.Players.LocalPlayer
 		for _, L_2 in ipairs(game.Workspace:GetDescendants()) do
