@@ -1,0 +1,62 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "slap battles", HidePremium = false, SaveConfig = true, IntroEnabled = false, ConfigFolder = "slap battles"})
+
+local jesus = Instance.new("Part", workspace)
+
+	jesus.Name = "jesusWalk"
+	jesus.Size = Vector3.new(2047, 0.009, 2019)
+	jesus.Position = Vector3.new(-80.5, -10.005, -246.5)
+	jesus.CanCollide = false
+	jesus.Anchored = true
+	jesus.Transparency = 1
+	
+local arenaVoid = Instance.new("Part", workspace)
+
+	arenaVoid.Name = "arenaVoid"
+	arenaVoid.Size = Vector3.new(798, 1, 1290)
+	arenaVoid.Position = Vector3.new(3450, 59.009, 68)
+	arenaVoid.CanCollide = false
+	arenaVoid.Anchored = true
+	arenaVoid.Transparency = 1
+
+local Tab = Window:MakeTab({
+	Name = "Combat",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddToggle({
+	Name = "Anti void (100 slap)",
+	Default = false,
+	Callback = function(state)
+		if state then
+
+	arenaVoid.CanCollide = true
+	arenaVoid.Anchored = true
+	arenaVoid.Transparency = 0.5
+
+    else
+
+	arenaVoid.CanCollide = false
+	arenaVoid.Anchored = true
+	arenaVoid.Transparency = 1
+    end
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Anti voin",
+	Default = false,
+	Callback = function(state)
+		if state then
+	jesus.CanCollide = true
+	jesus.Anchored = true
+	jesus.Transparency = 0.5
+    else
+
+	jesus.CanCollide = false
+	jesus.Anchored = true
+	jesus.Transparency = 1
+    end
+	end    
+})
